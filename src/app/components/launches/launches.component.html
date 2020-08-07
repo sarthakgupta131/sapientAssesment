@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4 Filter-scroll">
+      <div class="card border-primary mb-3">
+        <div class="card-header">Launch Years:</div>
+        <div class="card-body text-primary detail-scroll scroll">
+          <button #button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': year.selected}" type="submit" value={{i}} *ngFor="let year of yearsList" (click)="selection(year,'Launchyear',i)">{{year.year}}</button>
+        </div>
+      </div>
+      <div class="card border-primary mb-3">
+        <div class="card-header">Successful Launch</div>
+        <div class="card-body text-primary scroll">
+          <button class="btn btn-success mb-2" type="submit" (click)="selection('true','SuccessfulLaunch')">True</button>
+          <button class="btn btn-success" type="submit" (click)="selection('false','SuccessfulLaunch')">False</button>
+          </div>
+      </div>
+      <div class="card border-primary mb-3">
+        <div class="card-header">Successful Landings</div>
+        <div class="card-body text-primary scroll">
+          <button class="btn btn-success mb-2" type="submit" (click)="selection('true','SuccessfulLanding')">True</button>
+          <button class="btn btn-success" type="submit" (click)="selection('false','SuccessfulLanding')">False</button>
+            </div>
+      </div>
+    </div>
+    <div class="col-8 detail-scroll">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-sm-4 mb-4" *ngFor="let launch of launches">
+          <div class="card">
+            <div>
+              <img src="{{launch.links.mission_patch}}" alt="Avatar" style="width:100%">
+            </div>
+            <div>
+              <h4><b>{{launch.mission_name}}</b></h4> 
+              <p>Mission Ids: {{launch.mission_id}}</p>
+              <p>Launch Year: {{launch.launch_year}}</p>
+              <p>Successful Launch: {{launch.launch_success}}</p>
+              <p>Successful Landing: {{launch.rocket.first_stage.cores[0].land_success}}</p> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading" class="spin-large"> </div>
