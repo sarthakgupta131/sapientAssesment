@@ -3,13 +3,13 @@
     <div class="col-12 col-sm-4 col-md-2">
       <div class="card border-primary mb-3">
         <div class="card-header">Reset Filters:</div>
-        <div class="card-body text-primary detail-scroll scroll">
+        <div class="card-body text-primary scroll">
           <button #button class="btn btn-success mb-2" type="submit" (click)="reset()">Reset</button>
         </div>
       </div>
       <div class="card border-primary mb-3">
         <div class="card-header">Launch Years:</div>
-        <div class="card-body text-primary detail-scroll scroll">
+        <div class="card-body text-primary scroll">
           <div class="row">
             <div class="col-6 col-sm-6 col-md-6" *ngFor="let year of yearsList">
               <button #button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': year.selected}" type="submit" value={{i}}  (click)="selection(year,'Launchyear',i)">{{year.year}}</button>

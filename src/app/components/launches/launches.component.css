@@ -38,24 +38,9 @@ button:disabled {
   border: 2px solid red;
 }
 
-.Filter-scroll {
-  max-height: 500px !important;
-  overflow-y: scroll !important;
-}
 .detail-scroll{
   max-height: 920px !important;
   overflow-y: scroll !important;
-}
-::-webkit-scrollbar {
-  width: 4px;
-}
- 
-::-webkit-scrollbar-track {
-  background:#fff;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #C1C1C1;
 }
 
 .scroll {
@@ -90,10 +75,6 @@ text-align: center;
 li {
   padding-left: 10px;
 }
-
-/* .launch-container .card {
-  height: 420px;
-} */
 
 scroll-to-top {
   position: fixed;

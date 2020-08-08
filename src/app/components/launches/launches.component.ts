@@ -194,19 +194,4 @@ export class LaunchesComponent implements  OnInit {
       })();
   }
 
-  // onSelect(launch: Launch): void {
-  //   if (!!launch.links.presskit) {
-  //     window.open(launch.links.presskit);
-  //   }
-  // }
-
-  // onSort(): void {
-  //   this.params.order = this.params.order === 'asc'
-  //     ? 'desc'
-  //     : 'asc';
-  // }
-
-  // handleOffset(offset: number): void {
-  //   this.params.offset = offset;
-  // }
 }
