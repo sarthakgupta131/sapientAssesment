@@ -29,12 +29,21 @@ export class LaunchesComponent implements  OnInit {
   launches: any[];
   windowScrolled: boolean;
 
-  constructor(private launchService: LaunchService,private location: Location) {
+  constructor(private launchService: LaunchService,private location: Location,@Inject(DOCUMENT) private document: Document) {
     this.blankRows = [];
     this.isLoading = false;
     this.max = undefined;
   }
   
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
+      if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 100) {
+          this.windowScrolled = true;
+      } 
+     else if (this.windowScrolled && window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+          this.windowScrolled = false;
+      }
+  }
   ngOnInit() {
     this.getLaunches();
   }
@@ -174,6 +183,16 @@ export class LaunchesComponent implements  OnInit {
     this.getLaunch();
     this.isLoading = true;
 }
+
+  scrollToTop() {
+      (function smoothscroll() {
+          var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+          if (currentScroll > 0) {
+              window.requestAnimationFrame(smoothscroll);
+              window.scrollTo(0, currentScroll - (currentScroll / 8));
+          }
+      })();
+  }
 
   // onSelect(launch: Launch): void {
   //   if (!!launch.links.presskit) {

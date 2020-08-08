@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-4">
+    <div class="col-12 col-sm-4 col-md-2">
       <div class="card border-primary mb-3">
         <div class="card-header">Reset Filters:</div>
         <div class="card-body text-primary detail-scroll scroll">
@@ -10,27 +10,43 @@
       <div class="card border-primary mb-3">
         <div class="card-header">Launch Years:</div>
         <div class="card-body text-primary detail-scroll scroll">
-          <button #button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': year.selected}" type="submit" value={{i}} *ngFor="let year of yearsList" (click)="selection(year,'Launchyear',i)">{{year.year}}</button>
+          <div class="row">
+            <div class="col-6 col-sm-6 col-md-6" *ngFor="let year of yearsList">
+              <button #button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': year.selected}" type="submit" value={{i}}  (click)="selection(year,'Launchyear',i)">{{year.year}}</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card border-primary mb-3">
         <div class="card-header">Successful Launch</div>
         <div class="card-body text-primary scroll">
-          <button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': selectedtrue}" type="submit" (click)="selection('true','SuccessfulLaunch')">True</button>
-          <button class="btn btn-success" [ngClass]="{'selectedEntry': selectedfalse}" type="submit" (click)="selection('false','SuccessfulLaunch')">False</button>
+          <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 ">
+              <button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': selectedtrue}" type="submit" (click)="selection('true','SuccessfulLaunch')">True</button>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 ">
+              <button class="btn btn-success" [ngClass]="{'selectedEntry': selectedfalse}" type="submit" (click)="selection('false','SuccessfulLaunch')">False</button>
+            </div> 
+            </div>
           </div>
-      </div>
+          </div>
       <div class="card border-primary mb-3">
         <div class="card-header">Successful Landings</div>
         <div class="card-body text-primary scroll">
-          <button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': selectedlandtrue}" type="submit" (click)="selection('true','SuccessfulLanding')">True</button>
-          <button class="btn btn-success" [ngClass]="{'selectedEntry': selectedlandfalse}" type="submit" (click)="selection('false','SuccessfulLanding')">False</button>
+          <div class="row">
+            <div class="col-6 col-sm-6 col-md-6">
+              <button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': selectedlandtrue}" type="submit" (click)="selection('true','SuccessfulLanding')">True</button>
             </div>
+            <div class="col-6 col-sm-6 col-md-6">
+              <button class="btn btn-success" [ngClass]="{'selectedEntry': selectedlandfalse}" type="submit" (click)="selection('false','SuccessfulLanding')">False</button>
+            </div>
+          </div>
+          </div>
       </div>
     </div>
-    <div class="col-8">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-sm-4 mb-4" *ngFor="let launch of launches">
+    <div class="col-12 col-sm-8 col-md-10">
+      <div class="row row-cols-1 row-cols-md-2 launch-container">
+        <div class="col-12 col-sm-6 col-md-3  mb-4" *ngFor="let launch of launches">
           <div class="card">
             <div class="img">
               <img src="{{launch.links.mission_patch ? launch.links.mission_patch : '../../../assets/spinner.gif' }}" alt="Avatar" style="width:100%">
@@ -41,7 +57,13 @@
               </div>
               <div class="col-sm-12">
                 <label class="greytext">Mission Ids:</label>
-                <li *ngFor="let id of launch.mission_id">{{id}}</li>
+                <ul *ngIf="launch.mission_id?.length > 0 ; else noData">
+                  <li  *ngFor="let id of launch.mission_id">{{id}}</li>
+                </ul>
+                <ng-template #noData>
+                  <ul>
+                  <li>N/A</li></ul>
+                </ng-template>
               </div>
               <div class="col-sm-12">
                 <label class="greytext">Launch Year:</label>
@@ -49,11 +71,11 @@
               </div>
               <div class="col-sm-12">
                 <label class="greytext">Successful Launch:</label>
-                <span class="pl-2">{{launch.launch_success}}</span>
+                <span class="pl-2">{{launch.launch_success ? launch.launch_success : 'N/A'}}</span>
               </div>
               <div class="col-sm-12">
                 <label class="greytext">Successful Landing:</label>
-                <span class="pl-2">{{launch.rocket.first_stage.cores[0].land_success}}</span>
+                <span class="pl-2">{{launch.rocket.first_stage.cores[0].land_success ? launch.rocket.first_stage.cores[0].land_success : 'N/A'}}</span>
               </div>
             </div>
           </div>
@@ -63,5 +85,7 @@
   </div>
 </div>
 <!--Scroll to top-->
-
+<div class="scroll-to-top" [ngClass]="{'show-scrollTop': windowScrolled}">
+  <img src="../../../assets/icon_top.png" alt="Icon goto top" (click)="scrollToTop()">
+</div>
 <div *ngIf="isLoading" class="spin-large"> </div>
