@@ -1,10 +1,9 @@
-# SpaceXLaunchListAngular
+# SpaceXLaunch
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
 
-A small, sample application that display SpaceX launches in a data table. 
+A small, sample application that display SpaceX launches on the basis of filters. 
 
-The pagination relies exclusively on the [SpaceX-API](https://github.com/r-spacex/SpaceX-API). As far as I could see in the docs there was no option to find out the total number of launches without actually fetching all of the records. In practice the full list of launches is fairly small (94 as of today). Performance-wise fetching the whole list upfront, or even in a staggered fashion, would still be very performant. But doing that would side-step most of the API's GET options, which include offsets, limits and sorting. For this reason the 'Last' pagination button stays disabled until the end of the list is reached and a maximum list size is 'discovered.' Once a maxium offset has been determined the 'Last' pagination option will remain enabled.
 
 ## Demo
 
