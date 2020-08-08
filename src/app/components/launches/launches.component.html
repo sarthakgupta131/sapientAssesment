@@ -32,15 +32,29 @@
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col col-sm-4 mb-4" *ngFor="let launch of launches">
           <div class="card">
-            <div>
-              <img src="{{launch.links.mission_patch}}" alt="Avatar" style="width:100%">
+            <div class="img">
+              <img src="{{launch.links.mission_patch ? launch.links.mission_patch : '../../../assets/spinner.gif' }}" alt="Avatar" style="width:100%">
             </div>
             <div>
-              <h4><b>{{launch.mission_name}}</b></h4> 
-              <p>Mission Ids: {{launch.mission_id}}</p>
-              <p>Launch Year: {{launch.launch_year}}</p>
-              <p>Successful Launch: {{launch.launch_success}}</p>
-              <p>Successful Landing: {{launch.rocket.first_stage.cores[0].land_success}}</p> 
+              <div class="col-sm-12">
+              <h4><b>{{launch.mission_name}}#{{launch.flight_number}}</b></h4> 
+              </div>
+              <div class="col-sm-12">
+                <label class="greytext">Mission Ids:</label>
+                <li *ngFor="let id of launch.mission_id">{{id}}</li>
+              </div>
+              <div class="col-sm-12">
+                <label class="greytext">Launch Year:</label>
+                <span class="pl-2">{{launch.launch_year}}</span>
+              </div>
+              <div class="col-sm-12">
+                <label class="greytext">Successful Launch:</label>
+                <span class="pl-2">{{launch.launch_success}}</span>
+              </div>
+              <div class="col-sm-12">
+                <label class="greytext">Successful Landing:</label>
+                <span class="pl-2">{{launch.rocket.first_stage.cores[0].land_success}}</span>
+              </div>
             </div>
           </div>
         </div>
