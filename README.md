@@ -7,7 +7,7 @@ A small, sample application that display SpaceX launches on the basis of filters
 
 ## Demo
 
-A deployed version can be found here: [https://jgkingston.github.io/space-x-launch-list-angular/](https://jgkingston.github.io/space-x-launch-list-angular/)
+A deployed version can be found here:
 
 ## Development server
 
