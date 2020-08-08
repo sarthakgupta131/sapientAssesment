@@ -1,57 +1,42 @@
-import { Component, OnInit, DoCheck, ViewChild, ElementRef } from '@angular/core';
-
-import { DEFAULT_PARAMS, Params, Orders } from '@models/params.model';
-import { Launch } from '@models/launch.model';
+import { Component, OnInit, DoCheck, ViewChild, ElementRef, Inject, HostListener } from '@angular/core';
 import { LaunchService } from '@app/services/launch.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Location, DOCUMENT } from '@angular/common';
+
 
 @Component({
   selector: 'app-launches',
   templateUrl: './launches.component.html',
   styleUrls: ['./launches.component.css']
 })
-export class LaunchesComponent implements DoCheck, OnInit {
+export class LaunchesComponent implements  OnInit {
   blankRows: number[];
   isLoading: boolean;
-  launches: Launch[];
   math = Math;
   max: number | undefined;
-  oldParamsOrder: Orders;
   oldParamsOffset: number;
-  params: Params;
-  yearsList : any = [];
+
+  yearsList: any = [];
   year: any;
   successfullaunch: any;
   successfullanding: any;
   param: {};
   selectedentry: boolean = false;
   @ViewChild('button') button: ElementRef;
+  selectedtrue: boolean;
+  selectedfalse: boolean;
+  selectedlandtrue: boolean;
+  selectedlandfalse: boolean;
+  launches: any[];
+  windowScrolled: boolean;
 
-  constructor(private launchService: LaunchService) {
+  constructor(private launchService: LaunchService,private location: Location) {
     this.blankRows = [];
     this.isLoading = false;
     this.max = undefined;
-    this.params = DEFAULT_PARAMS;
   }
-
+  
   ngOnInit() {
     this.getLaunches();
-  }
-
-  ngDoCheck() {
-    /*
-      I am wondering if there is a better way to do this using ngOnChanges.
-      The examples I found were all closely tied to two-waydata-binding of
-      input elements.
-    */
-    // if (this.params.order !== this.oldParamsOrder) {
-    //   this.getLaunches();
-    //   this.oldParamsOrder = this.params.order;
-    // }
-    // if (this.params.offset !== this.oldParamsOffset) {
-    //   this.getLaunches();
-    //   this.oldParamsOffset = this.params.offset;
-    // }
   }
 
   getLaunches(): void {
@@ -67,7 +52,8 @@ export class LaunchesComponent implements DoCheck, OnInit {
           if (i <= -1) {
             this.yearsList.push(item.launch_year);
           }
-        })
+        });
+        this.location.replaceState(this.launchService.queryString);
         this.yearsList.forEach((part, index, yearsList) => {
           yearsList[index] = {
             id: index,
@@ -81,21 +67,35 @@ export class LaunchesComponent implements DoCheck, OnInit {
   }
 
   selection(value, parameter, index?) {
-    this.yearsList.forEach((x) => {
-      x.selected = false;
-    });
     this.isLoading = true;
     if (parameter === 'Launchyear') {
+      this.yearsList.forEach((x) => {
+        x.selected = false;
+      });
       this.year = value.year;
-     this.yearsList.find((x)=> {
-        if(x.year === value.year) {
+      this.yearsList.find((x) => {
+        if (x.year === value.year) {
           x.selected = true;
         }
       });
     } else if (parameter === 'SuccessfulLaunch') {
       this.successfullaunch = value;
+      if (value === "true") {
+        this.selectedtrue = true;
+        this.selectedfalse = false;
+      } else {
+        this.selectedfalse = true;
+        this.selectedtrue = false;
+      }
     } else {
       this.successfullanding = value;
+      if (value === "true") {
+        this.selectedlandtrue = true;
+        this.selectedlandfalse = false;
+      } else {
+        this.selectedlandtrue = false;
+        this.selectedlandfalse = true
+      }
     }
     this.getLaunch();
   }
@@ -148,12 +148,32 @@ export class LaunchesComponent implements DoCheck, OnInit {
         launch_year: this.year,
         launch_success: this.successfullaunch
       }
+    } else if(!this.year && !this.successfullanding && !this.successfullaunch) {
+      this.param = {
+        limit: '100',
+      }
     }
     this.launchService.getLaunches(this.param).subscribe(launches => {
       this.launches = launches;
       this.isLoading = false;
     });
+    this.location.replaceState(this.launchService.queryString);
   }
+
+  reset() {
+    this.year = '';
+    this.successfullanding = '';
+    this.successfullaunch = '';
+    this.yearsList.forEach((x) => {
+      x.selected = false;
+    });
+    this.selectedlandtrue = false;
+    this.selectedlandfalse = false;
+    this.selectedtrue = false;
+    this.selectedfalse = false;
+    this.getLaunch();
+    this.isLoading = true;
+}
 
   // onSelect(launch: Launch): void {
   //   if (!!launch.links.presskit) {

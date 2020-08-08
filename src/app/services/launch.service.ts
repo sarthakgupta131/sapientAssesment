@@ -12,12 +12,13 @@ import { Utils } from './utils.service';
 })
 export class LaunchService {
   launchesUrl = 'https://api.spacexdata.com/v3/launches';
+  queryString: string;
 
   constructor(private http: HttpClient) {}
 
   getLaunches(params): Observable<Launch[]> {
-    const queryString = Utils.getQueryString(params);
-    return this.http.get<Launch[]>(`${this.launchesUrl}?${queryString}`)
+     this.queryString = Utils.getQueryString(params);
+    return this.http.get<Launch[]>(`${this.launchesUrl}?${this.queryString}`)
       .pipe();
   }
 }

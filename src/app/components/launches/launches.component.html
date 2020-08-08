@@ -1,6 +1,12 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-4 Filter-scroll">
+    <div class="col-4">
+      <div class="card border-primary mb-3">
+        <div class="card-header">Reset Filters:</div>
+        <div class="card-body text-primary detail-scroll scroll">
+          <button #button class="btn btn-success mb-2" type="submit" (click)="reset()">Reset</button>
+        </div>
+      </div>
       <div class="card border-primary mb-3">
         <div class="card-header">Launch Years:</div>
         <div class="card-body text-primary detail-scroll scroll">
@@ -10,19 +16,19 @@
       <div class="card border-primary mb-3">
         <div class="card-header">Successful Launch</div>
         <div class="card-body text-primary scroll">
-          <button class="btn btn-success mb-2" type="submit" (click)="selection('true','SuccessfulLaunch')">True</button>
-          <button class="btn btn-success" type="submit" (click)="selection('false','SuccessfulLaunch')">False</button>
+          <button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': selectedtrue}" type="submit" (click)="selection('true','SuccessfulLaunch')">True</button>
+          <button class="btn btn-success" [ngClass]="{'selectedEntry': selectedfalse}" type="submit" (click)="selection('false','SuccessfulLaunch')">False</button>
           </div>
       </div>
       <div class="card border-primary mb-3">
         <div class="card-header">Successful Landings</div>
         <div class="card-body text-primary scroll">
-          <button class="btn btn-success mb-2" type="submit" (click)="selection('true','SuccessfulLanding')">True</button>
-          <button class="btn btn-success" type="submit" (click)="selection('false','SuccessfulLanding')">False</button>
+          <button class="btn btn-success mb-2" [ngClass]="{'selectedEntry': selectedlandtrue}" type="submit" (click)="selection('true','SuccessfulLanding')">True</button>
+          <button class="btn btn-success" [ngClass]="{'selectedEntry': selectedlandfalse}" type="submit" (click)="selection('false','SuccessfulLanding')">False</button>
             </div>
       </div>
     </div>
-    <div class="col-8 detail-scroll">
+    <div class="col-8">
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col col-sm-4 mb-4" *ngFor="let launch of launches">
           <div class="card">
@@ -42,4 +48,6 @@
     </div>
   </div>
 </div>
+<!--Scroll to top-->
+
 <div *ngIf="isLoading" class="spin-large"> </div>
