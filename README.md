@@ -7,7 +7,7 @@ A small, sample application that display SpaceX launches on the basis of filters
 
 ## Demo
 
-A deployed version can be found here:
+A deployed version can be found here:https://spacexaunch.web.app
 
 ## Development server
 
